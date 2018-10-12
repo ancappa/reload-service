@@ -1,0 +1,459 @@
+swagger: '2.0'
+info:
+  title: topup-service
+  version: 1.0.0
+  description: >-
+   Il servizio si occupa della gestione della ricarica
+host: mytimstub.azurewebsites.net
+basePath: /api
+schemes:
+  - https
+  - http
+paths:
+  '/topup/amounts':
+    get:
+      operationId: /amounts
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      description: >-
+        Recupera I tagli di ricarica, con l'importo di default, dal catalogo.
+      parameters:
+        - name: SessionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua la sessione utente. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: BusinessID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua il processo di business. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: MessageID
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo univoco del singolo messaggio. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: TransactionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Identificativo univoco della transazione. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: SourceSystem
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo del sistema chiamante. LOV: WEB, APP, MSITE, CBE, DCA'
+          required: true
+          type: string 
+        - name: Channel
+          in: header
+          description: 'PARAMETRO PASSANTE. Canale da cui parte la richiesta. LOV: MYTIMWEB, MYTIMAPP, MYTIMMSITE'
+          required: true
+          type: string
+        - name: InteractionDate-Date
+          in: header
+          description: 'Data interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: YYYY-MM-DD'
+          required: true
+          type: string
+        - name: InteractionDate-Time
+          in: header
+          description: 'Orario interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: HH:MM:SS'
+          required: true
+          type: string
+        - name: DeviceType
+          in: header
+          description: 'Solo per APP. Indica il tipo di device da cui viene la richiesta. Passante tra APP FE e CBE. LOV: ANDROID, SMARTPHONE, TABLET, I-PAD, IPHONE'
+          required: true
+          type: string
+        - name: ClientVersion
+          in: header
+          description: "Solo per APP. Indica la versione dell'app in uso. Passante tra APP FE e CBE" 
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/amounts'
+        '404':
+          description: >-
+            Risorsa non trovata.
+        '408':
+          description: >-
+            Richiesta scaduta. L’esecuzione del metodo non è terminata nei
+            tempi stabiliti.  
+        '422':
+          description: >-
+            Non è stato possibile elaborare il JSON dell’entità da restituire al
+            chiamante.
+        '500':
+          description: >-
+            Errore generico non è stato possibile portare a termine l’esecuzione
+            del metodo.
+        '503':
+          description: 'Servizio non disponibile. '
+      security:
+        - apikeyQuery: []
+  '/topup/termsAndConditions':
+    get:
+      operationId: /termsAndConditions
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      description: >-
+        Recupera i termini e le condizioni di privacy da CMS
+      parameters:
+        - name: SessionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua la sessione utente. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: BusinessID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua il processo di business. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: MessageID
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo univoco del singolo messaggio. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: TransactionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Identificativo univoco della transazione. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: SourceSystem
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo del sistema chiamante. LOV: WEB, APP, MSITE, CBE, DCA'
+          required: true
+          type: string 
+        - name: Channel
+          in: header
+          description: 'PARAMETRO PASSANTE. Canale da cui parte la richiesta. LOV: MYTIMWEB, MYTIMAPP, MYTIMMSITE'
+          required: true
+          type: string
+        - name: InteractionDate-Date
+          in: header
+          description: 'Data interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: YYYY-MM-DD'
+          required: true
+          type: string
+        - name: InteractionDate-Time
+          in: header
+          description: 'Orario interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: HH:MM:SS'
+          required: true
+          type: string
+        - name: DeviceType
+          in: header
+          description: 'Solo per APP. Indica il tipo di device da cui viene la richiesta. Passante tra APP FE e CBE. LOV: ANDROID, SMARTPHONE, TABLET, I-PAD, IPHONE'
+          required: true
+          type: string
+        - name: ClientVersion
+          in: header
+          description: "Solo per APP. Indica la versione dell'app in uso. Passante tra APP FE e CBE" 
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/termsAndCondition'
+        '404':
+          description: >-
+            Risorsa non trovata.
+        '408':
+          description: >-
+            Richiesta scaduta. L’esecuzione del metodo non è terminata nei
+            tempi stabiliti.  
+        '422':
+          description: >-
+            Non è stato possibile elaborare il JSON dell’entità da restituire al
+            chiamante.
+        '500':
+          description: >-
+            Errore generico non è stato possibile portare a termine l’esecuzione
+            del metodo.
+        '503':
+          description: 'Servizio non disponibile. '
+      security:
+        - apikeyQuery: []
+  '/topup/checkout':
+    post:
+      operationId: /checkout
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      description: >-
+       esegue l'operazione di presa in carico della ricarica
+      parameters:
+        - name: SessionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua la sessione utente. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: BusinessID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua il processo di business. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: MessageID
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo univoco del singolo messaggio. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: TransactionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Identificativo univoco della transazione. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: SourceSystem
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo del sistema chiamante. LOV: WEB, APP, MSITE, CBE, DCA'
+          required: true
+          type: string 
+        - name: Channel
+          in: header
+          description: 'PARAMETRO PASSANTE. Canale da cui parte la richiesta. LOV: MYTIMWEB, MYTIMAPP, MYTIMMSITE'
+          required: true
+          type: string
+        - name: InteractionDate-Date
+          in: header
+          description: 'Data interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: YYYY-MM-DD'
+          required: true
+          type: string
+        - name: InteractionDate-Time
+          in: header
+          description: 'Orario interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: HH:MM:SS'
+          required: true
+          type: string
+        - name: DeviceType
+          in: header
+          description: 'Solo per APP. Indica il tipo di device da cui viene la richiesta. Passante tra APP FE e CBE. LOV: ANDROID, SMARTPHONE, TABLET, I-PAD, IPHONE'
+          required: true
+          type: string
+        - name: ClientVersion
+          in: header
+          description: "Solo per APP. Indica la versione dell'app in uso. Passante tra APP FE e CBE" 
+          required: false
+          type: string
+        - in: body
+          name: checkout
+          description: Informazioni necessarie per richiamare il servizio. I campi bonus, idBonus e pinCode sono obbligatori sono nel caso di ricarica con promo. Il campo tiid è valorizzato solo in caso di utente DBSS
+          schema:
+            type: object
+            required:
+              - checkout
+            properties:
+              fromMsisdn:
+                type: string
+              toMsisdn:
+                type: string
+              amount:
+                type: integer
+              cardNumber:
+                type: string
+              expiryMonth:
+                type: string
+              expiryYear:
+                type: string
+              buyerName:
+                type: string
+              cvv:
+                type: string
+              bonus:
+                type: string
+              idBonus:
+                type: string
+              pinCode: 
+                type: string
+              subSys: 
+                type: string
+              tiid: 
+                type: string  
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/checkout'
+        '400':
+          description: >-
+            Parametri della richiesta mancanti o errati. 
+        '500':
+          description: >-
+            Errore generico non è stato possibile portare a termine l’esecuzione
+            del metodo.
+        '401':
+          description: >-
+           Non è stato possibile procedere con l'operazione
+        '408':
+          description: >-
+           Richiesta scaduta. L’esecuzione del metodo non è terminata nei tempi stabiliti
+        '503':
+          description: >-
+           Servizio non disponibile 
+        '504':
+          description: >-
+           Non è stato possibile chiamare il sistema legacy owner del dato
+      security:
+        - apikeyQuery: []
+  '/topup/ricaricard':
+    post:
+      operationId: /ricaricard
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      description: >-
+       esegue l'operazione di presa in carico della ricarica
+      parameters:
+        - name: SessionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua la sessione utente. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: BusinessID
+          in: header
+          description: 'PARAMETRO PASSANTE. Individua il processo di business. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: MessageID
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo univoco del singolo messaggio. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: TransactionID
+          in: header
+          description: 'PARAMETRO PASSANTE. Identificativo univoco della transazione. Formato: UUID 24 caratteri esadecimali'
+          required: true
+          type: string
+        - name: SourceSystem
+          in: header
+          description: 'PARAMETRO NON PASSANTE. Identificativo del sistema chiamante. LOV: WEB, APP, MSITE, CBE, DCA'
+          required: true
+          type: string 
+        - name: Channel
+          in: header
+          description: 'PARAMETRO PASSANTE. Canale da cui parte la richiesta. LOV: MYTIMWEB, MYTIMAPP, MYTIMMSITE'
+          required: true
+          type: string
+        - name: InteractionDate-Date
+          in: header
+          description: 'Data interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: YYYY-MM-DD'
+          required: true
+          type: string
+        - name: InteractionDate-Time
+          in: header
+          description: 'Orario interazione utente iniziale. Creato da APP FE, sovrascritto da CBE e poi passante per gli altri sistemi. Formato: HH:MM:SS'
+          required: true
+          type: string
+        - name: DeviceType
+          in: header
+          description: 'Solo per APP. Indica il tipo di device da cui viene la richiesta. Passante tra APP FE e CBE. LOV: ANDROID, SMARTPHONE, TABLET, I-PAD, IPHONE'
+          required: true
+          type: string
+        - name: ClientVersion
+          in: header
+          description: "Solo per APP. Indica la versione dell'app in uso. Passante tra APP FE e CBE" 
+          required: false
+          type: string
+        - in: body
+          name: ricaricard
+          description: Informazioni necessarie per richiamare il servizio. 
+          schema:
+            type: object
+            required:
+              - ricaricard
+            properties:
+              scratchCode :
+                type: string
+                description: >-
+                  codice della scratch card
+              fromMsisdn:
+                type: string
+                description: >-
+                  numero dal quale si effettua la ricarica
+              toMsisdn:
+                type: string
+                description: >-
+                  numero sul quale si effettua la ricarica
+              subSys: 
+                type: string
+                description: >-
+                  - MYTIMAPP
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/ricaricard'
+        '400':
+          description: >-
+            Parametri della richiesta mancanti o errati. 
+        '404':
+          description: >-
+            Codice scheda errato o non esistente.
+        '500':
+          description: >-
+            Errore generico non è stato possibile portare a termine l’esecuzione
+            del metodo.
+        '401':
+          description: >-
+           Non è stato possibile procedere con l'operazione
+      security:
+        - apikeyQuery: []
+  
+definitions:
+  amounts:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ok
+      amounts:
+        type: array
+        items:
+          type: integer
+          example: [10, 15, 20, 30, 50, 80, 100, 150]
+      default:
+        type: integer
+        example: 20
+      info_promo: 
+        type: string
+        example: Solo oggi ricaricando con PayPal hai 5€ in più di bonus
+  termsAndCondition:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ok
+      title:
+        type: string
+        example: “Informativa ai sensi della normativa Privacy” 
+      text:
+        type: string
+        example: <terms_and_conditions>
+  checkout:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ok
+      transactionId:
+        type: string
+        example: "123ABC456"
+  ricaricard:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ok
+      amount:
+        type: string
+        example: "15"     
+
+securityDefinitions:
+  apikeyQuery:
+    type: apiKey
+    name: code
+    in: header

@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: pin-service
+
+#server:
+#  port: 8090
