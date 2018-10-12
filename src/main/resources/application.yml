@@ -73,7 +73,7 @@ logging:
     controller:
       "it.tim.reload.web.ReloadController"
 server:
-  port: "${port:8090}"
+  port: "${port:8080}"
   tomcat: 
     accept-count: "${accept-count:50}"
     max-connections: "${max-connections:50}"       
@@ -141,7 +141,8 @@ logback.access:
   #   5. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml"
   config: "logback/logback-access.xml"       
 server:
-  port: 8443 # 8080 #
+  port: 8443 
+  # 8080
   tomcat: 
     accept-count: "${accept-count:50}"
     max-connections: "${max-connections:50}"       
@@ -182,7 +183,8 @@ logback.access:
   #   5. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml"
   config: "logback/logback-access.xml"       
 server:
-  port: 8443 #8080
+  port: 8443
+  #8080
   tomcat: 
     accept-count: "${accept-count:50}"
     max-connections: "${max-connections:50}"       

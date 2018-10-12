@@ -108,7 +108,11 @@ public class ReloadService {
 		StringBuilder buff = new StringBuilder();
 
 		buff.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ");
-		buff.append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://telecomitalia.it/SOA/SOAP/SOAPHeader\" xmlns:ns=\"http://telecomitalia.it/SOA/InitiativeCodeMgmt/2015-05-11\" xmlns:ns1=\"http://telecomitalia.it/SOA/InitiativeCodeMgmtCustomTypes/2015-05-11\"> ");
+		buff.append("<soapenv:Envelope "
+				+ "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" "
+				+ "xmlns:soap=\"http://telecomitalia.it/SOA/SOAP/SOAPHeader\" "
+				+ "xmlns:ns=\"http://telecomitalia.it/SOA/PrepaidMobileTopUpMgmt/2015-05-11\" "
+				+ "xmlns:ns1=\"http://telecomitalia.it/SOA/PrepaidMobileTopUpMgmtCustomTypes/2015-05-11\"> ");
 		buff.append("<soapenv:Header> ");
 		buff.append("<soap:Header> ");
 		buff.append("<soap:sourceSystem>").append(headers.getFirst("sourceSystem")).append("</soap:sourceSystem> ");
